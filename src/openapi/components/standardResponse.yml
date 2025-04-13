@@ -1,0 +1,49 @@
+components:
+  schemas:
+    requestResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: message of the response
+        statusCode:
+          type: number
+          description: status of the response
+
+    dateTimeResponse:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          description: user creation date
+        updated_at:
+          type: string
+          format: date-time
+          description: user update date
+        deleted_at:
+          type: string
+          format: date-time
+          description: user update date
+
+    modifiedResponse:
+      type: object
+      properties:
+        generateMaps:
+          type: array
+          items:
+            type: array
+        raw:
+          type: array
+          items:
+            type: array
+            additionalProperties: true
+        affected:
+          type: number
+          description: number of affected rows
+
+    combinedModifiedAndRequestResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/modifiedResponse'
+        - $ref: '#/components/schemas/requestResponse'

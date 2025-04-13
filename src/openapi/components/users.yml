@@ -1,0 +1,94 @@
+components:
+  schemas:
+    createUserDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: user name
+        email:
+          type: string
+          description: user email
+        password:
+          type: string
+          description: user password
+        isAdmin:
+          type: boolean
+          description: user is admin
+          optional: true
+
+    updateUserDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: user name
+        password:
+          type: string
+          description: user password
+          optional: true
+        isAdmin:
+          type: boolean
+          description: user is admin
+          optional: true
+
+    userEntity:
+      type: object
+      properties:
+        data:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/createUserDto'
+            - $ref: '#/components/schemas/dateTimeResponse'
+
+    createUserResponse:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/userEntity'
+        - $ref: '#/components/schemas/requestResponse'
+
+    userInfo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: user id
+        name:
+          type: string
+          description: user name
+        email:
+          type: string
+          description: user email
+
+    getAllUsersResponse:
+      type: object
+      allOf:
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/userInfo'
+        - $ref: '#/components/schemas/requestResponse'
+
+    getUserResponse:
+      type: object
+      allOf:
+        - type: object
+          properties:
+            data:
+              type: object
+              allOf:
+                - $ref: '#/components/schemas/userInfo'
+                - $ref: '#/components/schemas/dateTimeResponse'
+        - $ref: '#/components/schemas/requestResponse'
+
+    changePasswordDto:
+      type: object
+      properties:
+        password:
+          type: string
+          description: user old or current password
+        newPassword:
+          type: string
+          description: user new password

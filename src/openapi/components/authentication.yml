@@ -1,0 +1,23 @@
+components:
+  schemas:
+    loginResponse:
+      type: object
+      allOf:
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: user id
+                name:
+                  type: string
+                  description: user name
+                email:
+                  type: string
+                  description: user email
+                token:
+                  type: string
+                  description: user token
+        - $ref: '#/components/schemas/requestResponse'
