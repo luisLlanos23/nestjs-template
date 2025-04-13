@@ -18,6 +18,11 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
 
+      - name: Validate Docker Hub credentials
+        run: |
+          echo "user: ${{ secrets.DOCKER_USERNAME && 'ok' || 'missing' }}"
+          echo "Token: ${{ secrets.DOCKER_PASSWORD && 'ok' || 'missing' }}"
+
       - name: Log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
