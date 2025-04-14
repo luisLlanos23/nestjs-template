@@ -5,7 +5,7 @@ resource "kubernetes_deployment_v1" "nestjs_template_deployment" {
     delete = "3m"
   }
   metadata {
-    name = "nestjs-template"
+    name      = "nestjs-template"
     namespace = "templates"
     labels = {
       app = "nestjs-template"
@@ -27,8 +27,8 @@ resource "kubernetes_deployment_v1" "nestjs_template_deployment" {
       }
       spec {
         container {
-          name = "nestjs-template"
-          image = "luisllanos/nestjs-server-template:latest"
+          name              = "nestjs-template"
+          image             = "luisllanos/nestjs-server-template:latest"
           image_pull_policy = "Always"
 
           env {
@@ -40,23 +40,23 @@ resource "kubernetes_deployment_v1" "nestjs_template_deployment" {
             }
           }
           env {
-            name = "DATABASE_HOST"
-            value = "http://$(NODE_IP)"
+            name  = "DATABASE_HOST"
+            value = "$(NODE_IP)"
           }
           env {
-            name = "DATABASE_PORT"
+            name  = "DATABASE_PORT"
             value = 30000
           }
           env {
-            name = "DATABASE_PASS"
+            name  = "DATABASE_PASS"
             value = var.env_vars.DATABASE_PASSWORD
           }
           env {
-            name = "RUN_MIGRATIONS"
+            name  = "RUN_MIGRATIONS"
             value = var.env_vars.RUN_MIGRATIONS
           }
           env {
-            name = "SECRET_TOKEN"
+            name  = "SECRET_TOKEN"
             value = var.env_vars.SECRET_TOKEN
           }
           env_from {
