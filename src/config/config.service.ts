@@ -8,15 +8,14 @@ export class ConfigService {
   private readonly envConfig: EnvConfig;
 
   constructor(filePath: string) {
-    const config = dotenv.parse(fs.readFileSync(filePath));
-    const parsedConfig = {
-      ...config,
-      PORT: parseInt(config.PORT || '', 10) || parseInt(process.env.PORT || '', 10) || 4000,
-      DATABASE_PORT: parseInt(config.DATABASE_PORT || '', 10) || parseInt(process.env.DATABASE_PORT || '', 10) || 5432,
-    };
+    const config = fs.existsSync(filePath)
+      ? dotenv.parse(fs.readFileSync(filePath))
+      : {};
 
     this.envConfig = ConfigService.validateInput({
-      ...parsedConfig,
+      ...config,
+      PORT: parseInt(config.PORT || process.env.PORT || '4000', 10),
+      DATABASE_PORT: parseInt(config.DATABASE_PORT || process.env.DATABASE_PORT || '5432', 10),
       ...process.env,
     });
   }
