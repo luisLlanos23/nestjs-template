@@ -13,10 +13,15 @@ export class ConfigService {
       : {};
 
     this.envConfig = ConfigService.validateInput({
-      ...config,
-      PORT: parseInt(config.PORT || process.env.PORT || '4000', 10),
+      DATABASE_HOST: config.DATABASE_HOST || process.env.DATABASE_HOST || 'localhost',
+      DATABASE_NAME: config.DATABASE_NAME || process.env.DATABASE_NAME || 'test',
       DATABASE_PORT: parseInt(config.DATABASE_PORT || process.env.DATABASE_PORT || '5432', 10),
-      ...process.env,
+      DATABASE_USER: config.DATABASE_USER || process.env.DATABASE_USER || 'user',
+      DATABASE_PASS: config.DATABASE_PASS || process.env.DATABASE_PASS || 'password',
+      DATABASE_SCHEMA: config.DATABASE_SCHEMA || process.env.DATABASE_SCHEMA || 'public',
+      PORT: parseInt(config.PORT || process.env.PORT || '4000', 10),
+      RUN_MIGRATIONS: config.RUN_MIGRATIONS === 'true' || process.env.RUN_MIGRATIONS === 'true' || false,
+      SECRET_TOKEN: config.SECRET_TOKEN || process.env.SECRET_TOKEN || 'default-secret',
     });
   }
 
