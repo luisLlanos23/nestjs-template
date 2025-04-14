@@ -48,7 +48,7 @@ resource "kubernetes_deployment_v1" "nestjs_template_deployment" {
             value = 30000
           }
           env {
-            name = "DATABASE_PASSWORD"
+            name = "DATABASE_PASS"
             value = var.env_vars.DATABASE_PASSWORD
           }
           env {
