@@ -28,7 +28,7 @@ resource "kubernetes_deployment_v1" "nestjs_template_deployment" {
       spec {
         container {
           name = "nestjs-template"
-          image = "luisllanos/nestjs-template:latest"
+          image = "luisllanos/nestjs-server-template"
           image_pull_policy = "Always"
 
           env {
