@@ -9,10 +9,15 @@ export class ConfigService {
 
   constructor(filePath: string) {
     const config = dotenv.parse(fs.readFileSync(filePath));
-    this.envConfig = ConfigService.validateInput({
+    const parsedConfig = {
       ...config,
-      PORT: parseInt(config.PORT, 10) || 3000,
-      DATABASE_PORT: parseInt(config.DATABASE_PORT, 10) || 5432,
+      PORT: parseInt(config.PORT || '', 10) || parseInt(process.env.PORT || '', 10) || 4000,
+      DATABASE_PORT: parseInt(config.DATABASE_PORT || '', 10) || parseInt(process.env.DATABASE_PORT || '', 10) || 5432,
+    };
+
+    this.envConfig = ConfigService.validateInput({
+      ...parsedConfig,
+      ...process.env,
     });
   }
 
