@@ -70,7 +70,7 @@ export class UsersService extends BaseService<
     const dataToken = await this.tokenService.verifyTokenKey(token);
     const userToDelete = await this.repository.findOne({ where: { id } });
     if (!userToDelete) throw new Error('User not found');
-    if (userToDelete.id !== dataToken.data.id && !dataToken.data.isAdmin) {
+    if (userToDelete.id !== dataToken.id && !dataToken.isAdmin) {
       throw new Error('You cannot delete this account unless you are an admin');
     }
     return await this.repository.softDelete(id);
@@ -88,7 +88,7 @@ export class UsersService extends BaseService<
       .withDeleted()
       .getOne();
     if (!userToEnable) throw new Error('User not found');
-    if (dataToken.data.id !== userToEnable.id && !dataToken.data.isAdmin) {
+    if (dataToken.id !== userToEnable.id && !dataToken.isAdmin) {
       throw new Error('You cannot enable this account unless you are an admin');
     }
     return await this.repository.restore(id);
@@ -96,7 +96,7 @@ export class UsersService extends BaseService<
 
   async changePassword(passwords: ChangePasswordDto, token: string, userId: number): Promise<UpdateResult> {
     const payload = await this.verifyTokenAndGetPayload(token);
-    const user = await this.getUserAndValidateAccess(payload.data, userId);
+    const user = await this.getUserAndValidateAccess(payload, userId);
     await this.validatePasswords(passwords.newPassword, passwords.password, user.password);
     user.password = await this.encryptPassword(passwords.newPassword);
     return await this.repository.update(user.id, user);

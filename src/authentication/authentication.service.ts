@@ -50,7 +50,7 @@ export class AuthenticationService {
 
   private async setExpirationToken(token: string) {
     const tokenDecode = await this.tokenService.verifyToken(token);
-    await this.usersService.setExpirationToken(tokenDecode.data.id, tokenDecode);
+    await this.usersService.setExpirationToken(tokenDecode.id, tokenDecode);
   }
 
   async verify(token: string) {
