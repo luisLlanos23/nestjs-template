@@ -60,7 +60,6 @@ export class TokenService {
       const tokenDecoded = await this.jwtService.verify(token, {
         secret: this.config.secretToken()
       });
-      console.log(tokenDecoded)
       return tokenDecoded;
     } catch (error) {
       throw error;
