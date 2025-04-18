@@ -3,11 +3,9 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from 'src/config/config.service';
 
 export type TokenData = {
-  data: {
-    id: number;
-    email: string;
-    isAdmin: boolean;
-  }
+  id: number;
+  email: string;
+  isAdmin: boolean;
   iat: number;
   exp: number;
 }
@@ -46,7 +44,7 @@ export class TokenService {
 
   public async createTokenKey(payload: { id: number, email: string, isAdmin: boolean }, time: string): Promise<string> {
     const token = await this.jwtService.sign(
-      { data: payload },
+      payload,
       {
       privateKey: this.config.secretToken(),
       expiresIn: time,
